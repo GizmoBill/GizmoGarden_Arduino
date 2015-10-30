@@ -1,0 +1,14 @@
+GizmoGardenCommon	KEYWORD1
+ggPrint	KEYWORD2
+ggAbs	KEYWORD2
+objectsEqual	KEYWORD2
+GizmoGardenText	KEYWORD1
+MakeGizmoGardenText	KEYWORD2
+getMusicTime	KEYWORD2
+GizmoGardenSmoother	KEYWORD1
+getSmoothness	KEYWORD2
+setSmoothness	KEYWORD2
+getOutput	KEYWORD2
+input	KEYWORD2
+reset	KEYWORD2
+IntOffBlock	KEYWORD1

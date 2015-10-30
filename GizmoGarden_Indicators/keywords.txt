@@ -1,0 +1,5 @@
+GizmoGardenIndicators	KEYWORD1
+GizmoGardenIndicator	KEYWORD1
+getValue	KEYWORD2
+setValue	KEYWORD2
+setOnOff	KEYWORD2

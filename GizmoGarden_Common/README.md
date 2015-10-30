@@ -1,0 +1,1 @@
+Gizmo Garden library containing classes and functions common to the Gizmo Garden library suite. Includes replacements for the ill-conceived min, max, and constrain macros; text string pointers in flash that can be used like native pointers; improved printing functions; a signal smoothing class; and others.

@@ -1,0 +1,4 @@
+GizmoGardenTone	KEYWORD2
+GizmoGardenToneBegin	KEYWORD2
+GizmoGardenGetVolume	KEYWORD2
+GizmoGardenSetVolume	KEYWORD2

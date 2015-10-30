@@ -1,0 +1,2 @@
+GizmoGardenPixels	KEYWORD1
+GizmoGarden_NeoPixel	KEYWORD1

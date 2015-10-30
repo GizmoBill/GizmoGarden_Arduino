@@ -1,0 +1,12 @@
+GizmoGardenMenus	KEYWORD1
+GizmoGardenMenuItem	KEYWORD1
+Enter	LITERAL1
+Leave	LITERAL1
+ChangeAndShow	LITERAL1
+Monitor	LITERAL1
+Select	LITERAL1
+MakeGizmoGardenMenuItem	KEYWORD1
+GizmoGardenMenuTask	KEYWORD1
+choose	KEYWORD2
+changeAndShow	KEYWORD2
+select	KEYWORD2

@@ -1,0 +1,14 @@
+GizmoGardenDriverData	KEYWORD1
+isValid	KEYWORD2
+GizmoGardenDriver	KEYWORD1
+getStiffness	KEYWORD2
+setStiffness	KEYWORD2
+calibrate	KEYWORD2
+isCalibrated	KEYWORD2
+getDark	KEYWORD2
+getRange	KEYWORD2
+getSmoothedOnRoad	KEYWORD2
+getData	KEYWORD2
+setData	KEYWORD2
+spin	KEYWORD2
+isSpinning	KEYWORD2

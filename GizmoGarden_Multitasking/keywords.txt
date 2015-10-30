@@ -1,0 +1,16 @@
+GizmoGardenMultitasking	KEYWORD1
+GizmoGardenTask	KEYWORD1
+run	KEYWORD2
+start	KEYWORD2
+isRunning	KEYWORD2
+stop	KEYWORD2
+myTurn	KEYWORD2
+customStart	KEYWORD2
+customStop	KEYWORD2
+getRunTime	KEYWORD2
+CustomStart	LITERAL1
+CustomStop	LITERAL1
+MakeGizmoGardenTask	KEYWORD1
+MakeGizmoGardenTaskWithStart	KEYWORD1
+MakeGizmoGardenTaskWithStop	KEYWORD1
+MakeGizmoGardenTaskWithStartStop	KEYWORD1
