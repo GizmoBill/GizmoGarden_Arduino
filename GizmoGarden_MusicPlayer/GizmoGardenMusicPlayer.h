@@ -31,6 +31,9 @@ a particular purpose.
 // the characters of one note. Octaves lower than 5 are not
 // implemented because the pitches are too low for piezo buzzers.
 //
+// A - (dash) can be used is place of <note><octave> characters to
+// signify a rest.
+//
 // One can derive a class from GizmoGardenMusicPlayer that makes
 // use of currentNote and currentWhiteNote to do some related
 // action, synchronized to the music.

@@ -39,7 +39,7 @@ Servo 1 __|   |_______________________________|   |_______________
                 _____                               _____
 Servo 2 _______|     |_____________________________|     |________
                        ____                                ____
-Servo 2 ______________|    |______________________________|    |__
+Servo 3 ______________|    |______________________________|    |__
           A   B      C     D                  A   B      C     D
 
 Interrupts occur at signal transition points, labeled A, B, C, and D.
@@ -55,7 +55,7 @@ but can be as long as 33 ms or a little shorter than 20.
 To avoid jitter, interrupts are scheduled to happen slightly before the
 signal transition time. The interrupt handler then spin-waits for the
 proper time. "Slightly before" is set by the JitterMargin parameter.
-Any short-duration event than runs with interrupts off for up to
+Any short-duration event that runs with interrupts off for up to
 JitterMargin microseconds will have no effect on servo timing. For
 short-duration events that are longer, timing variability is reduced
 by JitterMargin.
@@ -81,6 +81,10 @@ D.
 
 Note that there can be as many instances of classes using ServoCallback
 as you need.
+
+Long-duration synchronization should be hidden from the sketch writer,
+who is unlikely to be sufficiently fluent in C++. See the the library
+GizmoGarden_Pixels, and the example ServoAndNeoPixels.
 */
 #include <Arduino.h>
 #include <inttypes.h>

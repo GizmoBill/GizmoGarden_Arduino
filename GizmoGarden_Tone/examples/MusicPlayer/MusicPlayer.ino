@@ -101,6 +101,8 @@ GizmoGardenIndicator volumeIndicator(VolumeLedPin);
 // Spaces are ignored, except that they cannot separate the characters of one note.
 // Octaves lower than 5 are not implemented because the pitches are too low for piezo buzzers.
 //
+// A - (dash) can be used is place of <note><octave> characters to signify a rest.
+//
 // The duration string uses these characters:
 //    S   sixteenth
 //    E   eighth

@@ -103,7 +103,7 @@ frequencyOK:
 
 ISR(TVEC)
 {
-  if (--count == 0)
+  if (count-- == 0)
     stopTone();
   else
   {

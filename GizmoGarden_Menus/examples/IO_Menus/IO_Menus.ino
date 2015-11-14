@@ -33,7 +33,7 @@ is released.
 
 The SELECT button is used to take some action, as determined by the programmer.
 
-Any given menu item can some or all of monitoring values, setting parameters, and taking
+Any given menu item can do some or all of monitoring values, setting parameters, and taking
 actions, as decided by the programmer.
 
 To create a menu item, start with the following template, select a name for the menu item,

@@ -49,7 +49,7 @@ theory of operation, see GizmoGardenServo.h.
 
 The example creates three tasks running in the Gizmo Garden multitasking system. One
 task cycles the NeoPixels, one waves the servo back and forth, and the third monitors
-two switched that start and stop the first two tasks.
+two switches that start and stop the first two tasks.
 */
 
 #include <Adafruit_NeoPixel_GizmoGardenModified.h>
