@@ -74,7 +74,7 @@ enum DigitalPins
 // *                  *
 // ********************
 
-Adafruit_NeoPixel neoPixels(30, NeoPin);
+GizmoGardenPixels neoPixels(30, NeoPin);
 
 int pixelIndex = 0;
 
