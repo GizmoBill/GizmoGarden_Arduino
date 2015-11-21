@@ -24,5 +24,11 @@ public:
 
 protected:
   virtual void callback();
+
+private:
+  // This is used like endTime in the Adafruit version, to guarantee that at least 50 us
+  // separates the end of one show() and the beginning of the next. But the theory of
+  // operation is somewhat different, and explained in GizmoGardenPixels.cpp.
+  uint8_t endMark;
 };
 #endif
