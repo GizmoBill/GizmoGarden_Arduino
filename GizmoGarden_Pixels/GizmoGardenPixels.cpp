@@ -27,7 +27,7 @@ GizmoGardenPixels::GizmoGardenPixels(uint16_t numPixels, uint8_t pin)
 // Adafruit uses calls to micros() to guarantee the timing without wasting time
 // in the typical case when no delay is necessary. But here callback() must run
 // entirely with interrupts off, and micros() can return values that are not
-// monotonically creasing when called with interrupts off, when they have
+// monotonically non-decreasing when called with interrupts off, when they have
 // been off for longer than the timer 0 period of 1024 us. Using micros() here
 // could under rare but possible cases cause a delay of around 1 ms when only
 // 50 us is needed.
