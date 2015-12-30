@@ -21,7 +21,7 @@ a particular purpose.
 
 // Define this macro to include the task monitor menu item. Comment
 // out if not using menus or to save memory.
-//#define TASK_MONITOR
+#define TASK_MONITOR
 
 #ifdef TASK_MONITOR
 #define DECLARE_TASK_NAME virtual GizmoGardenText name() const;
@@ -129,7 +129,7 @@ public:
   // Note: This makes a recursive call to run. Only one task in the
   // program should use wait or delay, and only when normal
   // miltitasking is too awkward.. 
-  static void delay(uint16_t ms);
+  // static void delay(uint16_t ms);
 
   // Return the maximum recent execution time of myTurn in
   // microseconds

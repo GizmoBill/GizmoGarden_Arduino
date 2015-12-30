@@ -74,13 +74,13 @@ bool GizmoGardenDriver::calibrate()
     wheels[s]->setSpeed(100);
     dark[s] = 0;
   }
-  GizmoGardenTask::delay(1000);
+  delay(1000);
   
   for (int i = 0; i < 32; ++i)
   {
     for (int s = 0; s < 2; ++s)
       dark[s] += analogRead(sensorPins[s]);
-    GizmoGardenTask::delay(60);
+    delay(60);
   }
   
   bool ok = true;

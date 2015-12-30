@@ -10,6 +10,18 @@
 #include "../Adafruit_NeoPixel_GizmoGardenModified/Adafruit_NeoPixel_GizmoGardenModified.h"
 #include "../GizmoGarden_Servo/GizmoGardenServo.h"
 
+struct NeoPixelColor
+{
+  uint8_t red, green, blue;
+
+  NeoPixelColor();
+  NeoPixelColor(uint8_t red, uint8_t green, uint8_t blue)
+    : red(red), green(green), blue(blue)
+  {}
+
+  operator uint32_t() { return Adafruit_NeoPixel::Color(red, green, blue); }
+};
+
 class GizmoGardenPixels : public Adafruit_NeoPixel, private ServoCallback
 {
 public:

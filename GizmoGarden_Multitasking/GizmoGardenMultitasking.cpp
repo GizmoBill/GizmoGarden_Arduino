@@ -131,12 +131,12 @@ void GizmoGardenTask::wait() const
     run();
 }
 
-void GizmoGardenTask::delay(uint16_t ms)
-{
-  uint32_t t = millis();
-  while (millis() < t + ms)
-    run();
-}
+//void GizmoGardenTask::delay(uint16_t ms)
+//{
+//  uint32_t t = millis();
+//  while (millis() < t + ms)
+//    run();
+//}
 
 void GizmoGardenTask::callMe(uint16_t ms)
 {
@@ -205,4 +205,9 @@ void GizmoGardenTask::run()
     else
       break;
   }
+}
+
+extern "C"
+{
+  void yield() { GizmoGardenTask::run(); }
 }

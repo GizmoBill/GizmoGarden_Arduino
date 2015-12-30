@@ -21,7 +21,7 @@ void GizmoGardenIndicator::setValue(int n)
   {
     stop();
     value = (int8_t)n;
-    digitalWrite(pin, n >= 0 ? LOW : HIGH);
+    digitalWrite(pin, value >= 0 ? LOW : HIGH);
   }
   else
   {
