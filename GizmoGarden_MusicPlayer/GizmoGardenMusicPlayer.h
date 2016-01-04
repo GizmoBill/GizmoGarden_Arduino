@@ -41,40 +41,68 @@ a particular purpose.
 class GizmoGardenMusicPlayer : public GizmoGardenTask
 {
 public:
-  GizmoGardenMusicPlayer(int beatLength);
+  GizmoGardenMusicPlayer(int beatLength, bool allowMenuStartStop = false);
 
+  int getBeatLength() const { return beatLength; }
+  void setBeatLength(int bl) { beatLength = bl; }
+
+  // Load specified music so that it will play when the task is started. This
+  // must be done before each start, since the music is not remembered.
+  void loadMusic(GizmoGardenText pitches, GizmoGardenText durations);
+
+  // Load and start
   void play(GizmoGardenText pitches, GizmoGardenText durations);
-
-  char currentNote() const { return currentPitchIndex; }
-  char currentWhiteNote() const { return currentWhiteIndex; }
 
   DECLARE_TASK_NAME
 
+  enum EndCodes
+  {
+    NormalEnd,
+    ForcedEnd,
+    PitchError,
+    DurationError
+  };
+
+  uint8_t getEndCode() const { return endCode; }
+  bool normalEnd() const { return endCode == NormalEnd; }
+
+  GizmoGardenText getStatus() const;
+  
 private:
   GizmoGardenText nextPitch;
   GizmoGardenText nextDuration;
   int beatLength;
 
-  int8_t currentPitchIndex;
   int8_t nextPitchIndex;
-
-  int8_t currentWhiteIndex;
   int8_t nextWhiteIndex;
+
+  uint8_t endCode;
 
   void getPitchIndex();
 
 protected:
   virtual void myTurn();
+  virtual void customNote(int pitchIndex, int whiteIndex);
 };
 
-#define MakeCustomMusic(name, beatLength)             \
-class name##Class : public GizmoGardenMusicPlayer     \
-{                                                     \
-public:                                               \
-  name##Class(int bl) : GizmoGardenMusicPlayer(bl) {} \
-protected:                                            \
-  virtual void myTurn();                              \
-} name(beatLength);                                   \
-void name##Class::myTurn()
+#define MakeMusicPlayer(name, beatLength)                     \
+class Class##name : public GizmoGardenMusicPlayer             \
+{                                                             \
+public:                                                       \
+  Class##name() : GizmoGardenMusicPlayer(beatLength, true) {} \
+  CUSTOM_START                                                \
+  CUSTOM_STOP                                                 \
+} name
+
+#define MakeCustomMusicPlayer(name, beatLength)               \
+class Class##name : public GizmoGardenMusicPlayer             \
+{                                                             \
+public:                                                       \
+  Class##name() : GizmoGardenMusicPlayer(beatLength, true) {} \
+  CUSTOM_START                                                \
+  CUSTOM_STOP                                                 \
+  virtual void customNote(int pitchIndex, int whiteIndex);    \
+} name;                                                       \
+void Class##name::customNote(int pitchIndex, int whiteIndex)
 
 #endif
