@@ -189,24 +189,3 @@ RingBase* RingBase::previous()
   for (p = this; p->next != this; p = p->next);
   return p;
 }
-
-// ************************
-// *                      *
-// *  Remote Setup Class  *
-// *                      *
-// ************************
-
-GizmoGardenSetupItem* GizmoGardenSetupItem::list = 0;
-
-GizmoGardenSetupItem::GizmoGardenSetupItem(void (*setupFunction)())
-  : setupFunction(setupFunction)
-{
-  next = list;
-  list = this;
-}
-
-void GizmoGardenSetupItem::setupAll()
-{
-  for (GizmoGardenSetupItem* p = list; p != 0; p = p->next)
-    p->setupFunction();
-}

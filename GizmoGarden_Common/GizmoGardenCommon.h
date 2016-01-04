@@ -95,14 +95,6 @@ public:
 
   GizmoGardenText& operator--() { --text; return *this; }
   GizmoGardenText operator--(int) { GizmoGardenText gt = *this; --text; return gt; }
-
-  bool operator==(GizmoGardenText s) const { return text == s.text; }
-  bool operator!=(GizmoGardenText s) const { return text != s.text; }
-
-  GizmoGardenText operator+(int n) const { GizmoGardenText s; s.text = text + n; return s; }
-  GizmoGardenText operator-(int n) const { GizmoGardenText s; s.text = text - n; return s; }
-
-  int operator-(GizmoGardenText s) const { return text - s.text; }
 };
 
 // This macro makes a string in flash using static initialization.
@@ -240,14 +232,7 @@ class Ring
 public:
   RingBase* ring;
 
-  Ring(bool noStaticInit) { if (!noStaticInit) ring = 0; }
-  // Most of the objects that end up on rings are constructed at static initialization
-  // time and inserted on the ring in that construction. In these cases the ring itself
-  // is constructed at static initialization time. Since the order of static
-  // initialization is hard to control, the ring may be constructed after objects that
-  // need to go on it and clear the ring. By constructing with noStaticInit = true,
-  // clearing ring is skipped, and we rely on the normal clearing of uninitialized 
-  // memory.
+  Ring() : ring(0) {}
 
   void forward();
   void backup ();
@@ -298,35 +283,5 @@ public:
 
   ~IntOffBlock() { SREG = saveSREG; }
 };
-
-// ************************
-// *                      *
-// *  Remote Setup Class  *
-// *                      *
-// ************************
-//
-// This class allows a setup function to be registerd so that it is called by
-// the main setup function. This is intended to be used by modules loaded into
-// a sketch as a separate tab. Those modules can have a setup function that
-// will be called at system setup time without needing to modify the main
-// setup. It costs some memory (4 bytes per registered function) and provides
-// some convenience in writing modules.
-//
-// Any setup function to be registerd must be void with no arguments. The main
-// setup function calls GizmoGardenSetupItem::setupAll() to execute the registered
-// functions.
-
-class GizmoGardenSetupItem
-{
-  static GizmoGardenSetupItem* list;
-  GizmoGardenSetupItem* next;
-  void (*setupFunction)();
-
-public:
-  GizmoGardenSetupItem(void (*setupFunction)());
-  static void setupAll();
-};
-
-#define GizmoGardenSetup(name) GizmoGardenSetupItem name##Item(name)
 
 #endif

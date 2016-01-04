@@ -1,6 +1,5 @@
 GizmoGardenMusicPlayer	KEYWORD1
 play	KEYWORD2
-loadMusic	KEYWORD2
 currentNote	KEYWORD2
 currentWhiteNote	KEYWORD2
-MakeMusicPlayer	KEYWORD1
+MakeCustomMusic	KEYWORD1

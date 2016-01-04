@@ -10,8 +10,8 @@ a particular purpose.
 #include "../GizmoGarden_Tone/GizmoGardenTone.h"
 #include "GizmoGardenMusicPlayer.h"
 
-GizmoGardenMusicPlayer::GizmoGardenMusicPlayer(int beatLength, bool allowMenuStartStop)
-  : beatLength(beatLength), GizmoGardenTask(allowMenuStartStop)
+GizmoGardenMusicPlayer::GizmoGardenMusicPlayer(int beatLength)
+  : beatLength(beatLength), GizmoGardenTask(false)
 {
 }
 
@@ -22,32 +22,18 @@ GizmoGardenText GizmoGardenMusicPlayer::name() const
 }
 #endif
 
-void GizmoGardenMusicPlayer::loadMusic(GizmoGardenText pitches,
-                                       GizmoGardenText durations)
-{
-  nextPitch = pitches;
-  nextDuration = durations;
-  endCode = ForcedEnd;
-  getPitchIndex();
-}
-
 void GizmoGardenMusicPlayer::play(GizmoGardenText pitches,
                                   GizmoGardenText durations)
 {
-  loadMusic(pitches, durations);
+  stop();
+  nextPitch = pitches;
+  nextDuration = durations;
+  getPitchIndex();
   start();
 }
 
-enum PitchCodes
-{
-  RestPitch  = -1,
-  EndPitch   = -2,
-  ErrorPitch = -3
-};
-
 void GizmoGardenMusicPlayer::getPitchIndex()
 {
-  //                                A   B  C  D  E  F  G
   static const char noteTable[] = { 9, 11, 0, 2, 4, 5, 7 };
   char c;
   do
@@ -58,7 +44,7 @@ void GizmoGardenMusicPlayer::getPitchIndex()
 
   if (c == '-')
   {
-    nextPitchIndex = nextWhiteIndex = RestPitch;
+    nextPitchIndex = nextWhiteIndex = 0;
     return;
   }
 
@@ -67,14 +53,14 @@ void GizmoGardenMusicPlayer::getPitchIndex()
   if (note >= 7 || octive >= 3)
   {
     --nextPitch;
-    nextPitchIndex = c == 0 ? EndPitch : ErrorPitch;
+    nextPitchIndex = nextWhiteIndex = -1;
     return;
   }
 
   note = noteTable[note];
   //note = pgm_read_byte(&noteTable[note]);
-  nextWhiteIndex = 7 * octive + ((note + 1) >> 1);
-  note += 12 * octive;
+  nextWhiteIndex = 7 * octive + ((note + 1) >> 1) + 1;
+  note += 12 * octive + 1;
 
   c = *nextPitch;
   if (c == '#')
@@ -100,66 +86,33 @@ const int pitchTable[] PROGMEM =
 
 void GizmoGardenMusicPlayer::myTurn()
 {
-  int8_t currentPitchIndex = nextPitchIndex;
-  int8_t currentWhiteIndex = nextWhiteIndex;
-
-  if (currentPitchIndex == EndPitch)
-  {
-    endCode = NormalEnd;
+  currentPitchIndex = nextPitchIndex;
+  currentWhiteIndex = nextWhiteIndex;
+  if (currentPitchIndex < 0)
     return;
-  }
-
-  if (currentPitchIndex == ErrorPitch)
-  {
-    endCode = PitchError;
-    return;
-  }
 
   uint16_t duration = getMusicTime(nextDuration, beatLength);
   if (duration == 0)
-  {
-    endCode = DurationError;
     return;
-  }
 
   getPitchIndex();
 
   // zero pitch is a rest, chill out and do nothing if the pitch is a rest
-  if (currentPitchIndex >= 0)
+  if (currentPitchIndex > 0)
   {
     // If sequential pitches are identical, shorten the first one to separate them
-    // as distinct notes.
+    // as distinct notes. Otherwise, shorten the duration by 5 ms so that the
+    // tone completes just before the next one, to avoid possible race condition
+    // between tone interrupts and the call to tone itself.
     uint16_t d = duration;
     if (nextPitchIndex == currentPitchIndex)
       d -= d >> 2;
-    GizmoGardenTone(pgm_read_word(&pitchTable[currentPitchIndex]), d);
+    else
+      d -= 5;
+    GizmoGardenTone(pgm_read_word(&pitchTable[currentPitchIndex - 1]), d);
   }
 
   // hold off on playing any more notes until the current note is done playing
   callMe(duration);
-  customNote(currentPitchIndex, currentWhiteIndex);
 }
 
-void GizmoGardenMusicPlayer::customNote(int, int)
-{
-}
-
-GizmoGardenText GizmoGardenMusicPlayer::getStatus() const
-{
-  if (isRunning())
-    return F("Running");
-
-  switch (getEndCode())
-  {
-  case NormalEnd:
-  case ForcedEnd:
-  default:
-    return F("Stopped");
-
-  case PitchError:
-    return nextPitch - 1;
-
-  case DurationError:
-    return nextDuration;
-  }
-}

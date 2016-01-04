@@ -14,7 +14,7 @@ struct NeoPixelColor
 {
   uint8_t red, green, blue;
 
-  NeoPixelColor() {}
+  NeoPixelColor();
   NeoPixelColor(uint8_t red, uint8_t green, uint8_t blue)
     : red(red), green(green), blue(blue)
   {}
