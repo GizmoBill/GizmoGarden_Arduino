@@ -12,7 +12,7 @@ a particular purpose.
 GizmoGardenMenuItem::GizmoGardenMenuItem() : RingBase(GizmoGardenMenuTask::menuRing.ring) {}
 GizmoGardenMenuItem::~GizmoGardenMenuItem() { remove(GizmoGardenMenuTask::menuRing.ring); }
 
-Ring<GizmoGardenMenuItem> GizmoGardenMenuTask::menuRing;
+Ring<GizmoGardenMenuItem> GizmoGardenMenuTask::menuRing(true);
 
 GizmoGardenMenuTask::GizmoGardenMenuTask(GizmoGardenLCDPrint& lcd)
 : lcd(lcd), oldButtons(0), monitorCounter(0), holdCounter(0),

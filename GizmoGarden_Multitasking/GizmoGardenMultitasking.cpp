@@ -22,7 +22,7 @@ protected:
 }
 taskMonitor;
 
-Ring<GizmoGardenTask> TaskMonitor::taskRing;
+Ring<GizmoGardenTask> TaskMonitor::taskRing(true);
 
 void TaskMonitor::action(uint8_t event, int8_t direction, GizmoGardenLCDPrint& lcd)
 {
