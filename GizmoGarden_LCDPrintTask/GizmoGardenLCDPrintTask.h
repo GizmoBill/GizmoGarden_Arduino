@@ -56,6 +56,8 @@ public:
   virtual size_t write(uint8_t);
 
   virtual GizmoGardenText name() const;
+
+  void setBacklight(int c) { lcd.setBacklight(c); }
 };
 
 #endif

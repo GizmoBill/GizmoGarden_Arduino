@@ -192,21 +192,21 @@ RingBase* RingBase::previous()
 
 // ************************
 // *                      *
-// *  Remote Setup Class  *
+// *  Event Registration  *
 // *                      *
 // ************************
 
-GizmoGardenSetupItem* GizmoGardenSetupItem::list = 0;
+GizmoGardenEventRegistry* GizmoGardenEventRegistry::list = 0;
 
-GizmoGardenSetupItem::GizmoGardenSetupItem(void (*setupFunction)())
-  : setupFunction(setupFunction)
+GizmoGardenEventRegistry::GizmoGardenEventRegistry(void (*eventFunction)(uint8_t eventCode))
+  : eventFunction(eventFunction)
 {
   next = list;
   list = this;
 }
 
-void GizmoGardenSetupItem::setupAll()
+void GizmoGardenEventRegistry::raiseEvent(uint8_t eventCode)
 {
-  for (GizmoGardenSetupItem* p = list; p != 0; p = p->next)
-    p->setupFunction();
+  for (GizmoGardenEventRegistry* p = list; p != 0; p = p->next)
+    p->eventFunction(eventCode);
 }

@@ -21,7 +21,7 @@ a particular purpose.
 
 // Define this macro to include the task monitor menu item. Comment
 // out if not using menus or to save memory.
-#define TASK_MONITOR
+//#define TASK_MONITOR
 
 #ifdef TASK_MONITOR
 #define DECLARE_TASK_NAME virtual GizmoGardenText name() const;

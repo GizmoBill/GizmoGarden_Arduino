@@ -1,0 +1,3 @@
+GizmoGardenMotorMenus	KEYWORD1
+GizmoGardenRotatingNMotorMenu	KEYWORD1
+GizmoGardenMotorOffsetMenu	KEYWORD1

@@ -38,11 +38,9 @@ void GizmoGardenColorMixer::MixMenu::action(uint8_t event, int8_t direction, Giz
     case Enter:
       lcd.print(F("Mix Color"));
       printMode(lcd);
-      if (interruptTask)
-      {
-        restartInterruptTask = interruptTask->isRunning();
+      restartInterruptTask = interruptTask != 0 && interruptTask->isRunning();
+      if (restartInterruptTask)
         interruptTask->stop();
-      }
       spinTask.start();
       break;
 

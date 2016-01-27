@@ -39,6 +39,7 @@ protected:
 #define MakeGizmoGardenMenuItem(name)                                   \
 class name##Class : public GizmoGardenMenuItem                          \
 {                                                                       \
+protected:                                                              \
   void printName() const { lcd.print(F(#name)); }                       \
   virtual void action(uint8_t event, int8_t direction,                  \
                       GizmoGardenLCDPrint&);                            \

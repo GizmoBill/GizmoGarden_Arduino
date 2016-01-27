@@ -301,32 +301,35 @@ public:
 
 // ************************
 // *                      *
-// *  Remote Setup Class  *
+// *  Event Registration  *
 // *                      *
 // ************************
 //
-// This class allows a setup function to be registerd so that it is called by
-// the main setup function. This is intended to be used by modules loaded into
-// a sketch as a separate tab. Those modules can have a setup function that
-// will be called at system setup time without needing to modify the main
-// setup. It costs some memory (4 bytes per registered function) and provides
-// some convenience in writing modules.
-//
-// Any setup function to be registerd must be void with no arguments. The main
-// setup function calls GizmoGardenSetupItem::setupAll() to execute the registered
-// functions.
+// This class allows a function to be registerd so that it is called when certain
+// events occur. This is intended to be used by modules loaded into a sketch as a
+// separate tab from a catalog of software modules. Those modules can have a
+// function that will be called on certain events without needing to modify any
+// other parts of the sketch. It costs some memory (4 bytes per registered function)
+// and provides some convenience in writing and using modules.
 
-class GizmoGardenSetupItem
+class GizmoGardenEventRegistry
 {
-  static GizmoGardenSetupItem* list;
-  GizmoGardenSetupItem* next;
-  void (*setupFunction)();
+  static GizmoGardenEventRegistry* list;
+  GizmoGardenEventRegistry* next;
+  void (*eventFunction)(uint8_t eventCode);
 
 public:
-  GizmoGardenSetupItem(void (*setupFunction)());
-  static void setupAll();
+  GizmoGardenEventRegistry(void (*eventFunction)(uint8_t eventCode));
+  static void raiseEvent(uint8_t eventCode);
+
+  enum EventCodes
+  {
+    GizmoSetup,
+    DriveStart,
+    DriveStop
+  };
 };
 
-#define GizmoGardenSetup(name) GizmoGardenSetupItem name##Item(name)
+#define GizmoGardenSetup(name) GizmoGardenEventRegistry name##Item(name)
 
 #endif
