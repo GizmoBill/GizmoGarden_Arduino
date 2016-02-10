@@ -53,6 +53,7 @@ class GizmoGardenRotatingMotor : private GizmoGardenServo
 {
   int8_t vel_;            // Use signed 8-bit values to save memory
   int8_t fullSpeed_;
+  int8_t zero_;
 
 #if TABLE_ACCESS == 0
   static const uint8_t speedTable[157];
@@ -74,6 +75,10 @@ public:
   // Get and set the current full speed
   int getFullSpeed() const { return fullSpeed_; }
   void setFullSpeed(int fs);
+
+  // Get and set the software zero point, microseconds from nominal zero
+  int getZero() const { return zero_; }
+  void setZero(int);
 
 #if TABLE_ACCESS == 2
   static void setSpeedTable(double amplitude, double sigma);

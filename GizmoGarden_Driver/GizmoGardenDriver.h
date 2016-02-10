@@ -24,7 +24,7 @@ a particular purpose.
 // GizmoGardenDriver class that is saved/restored from EEPROM
 struct GizmoGardenDriverData
 {
-  enum { ValidKey = 0x37 };
+  enum { ValidKey = 0x3B };
 
   // These are copies of fields from GizmoGardenDriver. See below
   // for definitions.
@@ -32,6 +32,7 @@ struct GizmoGardenDriverData
   uint8_t    propK;
   int16_t    dark[2];
   uint16_t   scale[2];
+  int8_t     motorZero[2];
 
   bool operator==(const GizmoGardenDriverData&);
   bool operator!=(const GizmoGardenDriverData& dd) { return !(*this == dd); }

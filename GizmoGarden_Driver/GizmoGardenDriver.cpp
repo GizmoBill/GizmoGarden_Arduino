@@ -116,6 +116,7 @@ void GizmoGardenDriver::getData(GizmoGardenDriverData& dd)
   {
     dd.dark [s] = dark [s];
     dd.scale[s] = scale[s];
+    dd.motorZero[s] = wheels[s]->getZero();
   }
 }
 
@@ -128,6 +129,7 @@ void GizmoGardenDriver::setData(const GizmoGardenDriverData& dd)
     {
       dark [s] = dd.dark [s];
       scale[s] = dd.scale[s];
+      wheels[s]->setZero(dd.motorZero[s]);
     }
   }
 }

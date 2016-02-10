@@ -73,6 +73,12 @@ void GizmoGardenRotatingMotor::setFullSpeed(int fs)
   setSpeed(getSpeed());
 }
 
+void GizmoGardenRotatingMotor::setZero(int z)
+{
+  zero_ = (int8_t)constrain(z, -25, 25);
+  setSpeed(getSpeed());
+}
+
 void GizmoGardenRotatingMotor::setSpeed(int v)
 {
   vel_ = (int8_t)constrain(v, -100, 100);
@@ -90,7 +96,7 @@ void GizmoGardenRotatingMotor::setSpeed(int v)
     t = -pgm_read_byte(&speedTable[-t]);
 #endif
 
-  writeMicroseconds(1500 + t);
+  writeMicroseconds(1500 + t + zero_);
 }
 
 // ***************************************

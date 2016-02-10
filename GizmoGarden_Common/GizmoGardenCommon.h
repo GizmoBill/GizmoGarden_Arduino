@@ -321,13 +321,6 @@ class GizmoGardenEventRegistry
 public:
   GizmoGardenEventRegistry(void (*eventFunction)(uint8_t eventCode));
   static void raiseEvent(uint8_t eventCode);
-
-  enum EventCodes
-  {
-    GizmoSetup,
-    DriveStart,
-    DriveStop
-  };
 };
 
 #define GizmoGardenSetup(name) GizmoGardenEventRegistry name##Item(name)
