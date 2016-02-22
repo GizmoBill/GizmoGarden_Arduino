@@ -67,6 +67,107 @@ inline T ggAbs(T x)
 
 // ***************************
 // *                         *
+// *  Flash Memory Pointers  *
+// *                         *
+// ***************************
+//
+// Create pointers to constant arrays in program (flash) memory that, by means of operator
+// overloading, behave like normal C++ pointers, including in particular array access. This
+// allows code that creates and uses constant arrays of various types, using normal array
+// access syntax, to keep those arrays in program memory with very small changes to the
+// code and without having to learn much about program memory access.
+
+// Place PROGSPACE at the beginning of an array declaration with static initialization.
+// Then construct a ProgSpacePointer using the typedefs below for access to the array.
+// The ProgSpacePointer can be a local variable in the function that needs the array
+// access.
+#define PROGSPACE const PROGMEM
+
+template <class T>
+class ProgSpacePointer
+{
+protected:
+  const T* p;
+
+public:
+  ProgSpacePointer() {}
+  ProgSpacePointer(const T* p) : p(p) {}
+
+  T operator[](int i) const;
+  T operator*() const { return (*this)[0]; }
+
+  ProgSpacePointer& operator++() { ++p; return *this; }
+  ProgSpacePointer operator++(int) { ProgSpacePointer t = *this; ++p; return t; }
+
+  ProgSpacePointer& operator--() { --p; return *this; }
+  ProgSpacePointer operator--(int) { ProgSpacePointer t = *this; --p; return t; }
+
+  bool operator==(ProgSpacePointer s) const { return p == s.p; }
+  bool operator!=(ProgSpacePointer s) const { return p != s.p; }
+
+  ProgSpacePointer operator+(int n) const { ProgSpacePointer s; s.p = p + n; return s; }
+  ProgSpacePointer operator-(int n) const { ProgSpacePointer s; s.p = p - n; return s; }
+
+  int operator-(ProgSpacePointer s) const { return p - s.p; }
+};
+
+// The only template function needed to mechanize ProgSpacePointer for a particular type
+// is operator[]. The following works for any type (somewhat inefficiently), with
+// efficient specializations for built-in numeric types below.
+template<class T>
+T ProgSpacePointer<T>::operator[](int i) const
+{
+  T c;
+  for (int i = 0; i < sizeof(T); ++i)
+    ((char*)&c)[i] = pgm_read_byte(((char*)(p + i))[i]);
+  return c;
+}
+
+template <>
+inline int ProgSpacePointer<int>::operator[](int i) const
+{
+  return pgm_read_word(p + i);
+}
+
+template <>
+inline unsigned int ProgSpacePointer<unsigned int>::operator[](int i) const
+{
+  return pgm_read_word(p + i);
+}
+
+template <>
+inline char ProgSpacePointer<char>::operator[](int i) const
+{
+  return pgm_read_byte(p + i);
+}
+
+template <>
+inline byte ProgSpacePointer<byte>::operator[](int i) const
+{
+  return pgm_read_byte(p + i);
+}
+
+template <>
+inline long ProgSpacePointer<long>::operator[](int i) const
+{
+  return pgm_read_dword(p + i);
+}
+
+template <>
+inline unsigned long ProgSpacePointer<unsigned long>::operator[](int i) const
+{
+  return pgm_read_dword(p + i);
+}
+
+typedef ProgSpacePointer<char> ProgChars;
+typedef ProgSpacePointer<byte> ProgBytes;
+typedef ProgSpacePointer<int> ProgInts;
+typedef ProgSpacePointer<unsigned int> ProgUInts;
+typedef ProgSpacePointer<long> ProgLongs;
+typedef ProgSpacePointer<unsigned long> ProgULongs;
+
+// ***************************
+// *                         *
 // *  Text Strings in Flash  *
 // *                         *
 // ***************************
@@ -77,32 +178,14 @@ inline T ggAbs(T x)
 // the F macro and the various print classes. Unlike F, one can make a
 // string in flash with static initialization.
 
-class GizmoGardenText
+class GizmoGardenText : public ProgSpacePointer<char>
 {
-  const char* text;
-
 public:
   GizmoGardenText() {}
-  GizmoGardenText(const __FlashStringHelper* s) : text((const char*) s) {}
+  GizmoGardenText(const __FlashStringHelper* s) : ProgSpacePointer<char>((const char*) s) {}
+  GizmoGardenText(ProgSpacePointer<char> p) : ProgSpacePointer<char>(p) {}
 
-  operator const __FlashStringHelper*() const { return (const __FlashStringHelper*) text; }
-
-  char operator[](int i) const { return pgm_read_byte(text + i); }
-  char operator*() const { return pgm_read_byte(text); }
-
-  GizmoGardenText& operator++() { ++text; return *this; }
-  GizmoGardenText operator++(int) { GizmoGardenText gt = *this; ++text; return gt; }
-
-  GizmoGardenText& operator--() { --text; return *this; }
-  GizmoGardenText operator--(int) { GizmoGardenText gt = *this; --text; return gt; }
-
-  bool operator==(GizmoGardenText s) const { return text == s.text; }
-  bool operator!=(GizmoGardenText s) const { return text != s.text; }
-
-  GizmoGardenText operator+(int n) const { GizmoGardenText s; s.text = text + n; return s; }
-  GizmoGardenText operator-(int n) const { GizmoGardenText s; s.text = text - n; return s; }
-
-  int operator-(GizmoGardenText s) const { return text - s.text; }
+  operator const __FlashStringHelper*() const { return (const __FlashStringHelper*) p; }
 };
 
 // This macro makes a string in flash using static initialization.
