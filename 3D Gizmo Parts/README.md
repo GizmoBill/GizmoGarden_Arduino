@@ -1,1 +1,0 @@
-This directory contains the 3D printer CAD files for all of the parts used to make self-driving parade floats for Gizmo Garden 2016.
