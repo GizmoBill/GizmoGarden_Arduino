@@ -20,6 +20,8 @@ struct NeoPixelColor
   {}
 
   operator uint32_t() { return Adafruit_NeoPixel::Color(red, green, blue); }
+
+  uint16_t energy() { return (uint16_t)red + (uint16_t)green + (uint16_t)blue; }
 };
 
 class GizmoGardenPixels : public Adafruit_NeoPixel, private ServoCallback
