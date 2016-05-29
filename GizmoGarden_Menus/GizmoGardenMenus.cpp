@@ -113,3 +113,27 @@ void GizmoGardenMenuTask::myTurn()
     monitorCounter = 0;
   }
 }
+
+// **************************************
+// *                                    *
+// *  A Menu Item to Start/Stop a Task  *
+// *                                    *
+// **************************************
+
+void GizmoGardenMenuStartStopTask::action(uint8_t event, int8_t direction, GizmoGardenLCDPrint& lcd)
+{
+  switch (event)
+  {
+    case Enter:
+      lcd.print(name);
+      break;
+
+    case Leave:
+      task.stop();
+      break;
+
+    case Select:
+      task.toggle();
+      break;
+  }
+}

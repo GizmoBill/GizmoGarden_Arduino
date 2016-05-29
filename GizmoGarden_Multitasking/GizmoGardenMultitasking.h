@@ -114,6 +114,9 @@ public:
   // Stop running
   void stop();
 
+  // Toggle run/stop
+  void toggle();
+
   // Override these to do some extra stuff when the task is started
   // or stopped.
   virtual void customStart();

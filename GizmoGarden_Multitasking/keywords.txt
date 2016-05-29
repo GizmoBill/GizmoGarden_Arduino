@@ -4,6 +4,10 @@ run	KEYWORD2
 start	KEYWORD2
 isRunning	KEYWORD2
 stop	KEYWORD2
+toggle	KEYWORD2
+callMe	KEYWORD2
+callMeFromNow	KEYWORD2
+fitMeIn	KEYWORD2
 myTurn	KEYWORD2
 customStart	KEYWORD2
 customStop	KEYWORD2

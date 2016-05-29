@@ -167,6 +167,14 @@ void GizmoGardenTask::stop()
   }
 }
 
+void GizmoGardenTask::toggle()
+{
+  if (isRunning())
+    stop();
+  else
+    start();
+}
+
 void GizmoGardenTask::customStart() {}
 void GizmoGardenTask::customStop() {}
 

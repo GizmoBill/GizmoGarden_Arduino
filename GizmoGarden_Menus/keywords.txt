@@ -10,3 +10,5 @@ GizmoGardenMenuTask	KEYWORD1
 choose	KEYWORD2
 changeAndShow	KEYWORD2
 select	KEYWORD2
+MakeGizmoGardenStartStopMenu	KEYWORD1
+GizmoGardenMenuStartStopTask	KEYWORD1

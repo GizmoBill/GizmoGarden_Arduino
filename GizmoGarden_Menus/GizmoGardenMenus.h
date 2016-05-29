@@ -77,4 +77,28 @@ public:
   GizmoGardenMenuItem* current() { return menuRing.current(); }
 };
 
+// **************************************
+// *                                    *
+// *  A Menu Item to Start/Stop a Task  *
+// *                                    *
+// **************************************
+
+class GizmoGardenMenuStartStopTask : public GizmoGardenMenuItem
+{
+  GizmoGardenTask& task;
+  GizmoGardenText name;
+
+protected:
+  virtual void action(uint8_t event, int8_t direction, GizmoGardenLCDPrint&);
+
+public:
+  GizmoGardenMenuStartStopTask(GizmoGardenText name, GizmoGardenTask& task)
+    : task(task), name(name)
+  {}
+};
+
+#define MakeGizmoGardenStartStopMenu(name, task)                        \
+  MakeGizmoGardenText(task##MenuName, name)                             \
+  GizmoGardenMenuStartStopTask task##MenuItem(task##MenuName, task);
+
 #endif
